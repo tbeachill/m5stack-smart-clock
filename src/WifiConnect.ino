@@ -6,7 +6,6 @@ int status = WL_IDLE_STATUS;     // the Wifi radio's status
 
 void WifiConnect()
 {
-
   // connect to the wifi network in Config.h
 
   M5.Lcd.printf("%s: ", WIFI_SSID);

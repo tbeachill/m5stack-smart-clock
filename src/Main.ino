@@ -1,5 +1,4 @@
 #include <M5Core2.h>
-#include <WifiConnect.h>
 #include <Clock.h>
 
 RTC_TimeTypeDef TimeStruct;
