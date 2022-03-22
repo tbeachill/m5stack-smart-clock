@@ -1,5 +1,6 @@
 #include <M5Core2.h>
 #include <Clock.h>
+#include <Kasa.h>
 
 RTC_TimeTypeDef TimeStruct;
 RTC_DateTypeDef DateStruct;
@@ -28,11 +29,16 @@ void setup(){
   M5.Lcd.setTextColor(WHITE);
 
   M5.Lcd.clear();
+
+  // turn off LED
+  M5.Axp.SetLed(0);
 }
 
 /* After the program in the setup() function is executed, the program in the loop() function will be executed
 The loop() function is an endless loop, in which the program will continue to run repeatedly */
 void loop() {
   DisplayTime(DateStruct, TimeStruct);
+  AutoBrightness(TimeStruct);
+  
   delay(1000);
 }

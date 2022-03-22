@@ -1,6 +1,8 @@
 #include <WiFi.h>
 #include <Config.h>
 #include <HTTPClient.h>
+#include <Kasa.h>
+
 
 void KasaEvent(Action action)
 {
@@ -39,4 +41,3 @@ void KasaEvent(Action action)
     return;
 }
 
-enum Action {Toggle, Dim10, Dim100};
