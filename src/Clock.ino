@@ -54,9 +54,6 @@ void DisplayTime(RTC_DateTypeDef DateStruct, RTC_TimeTypeDef TimeStruct)
     M5.Rtc.GetDate(&DateStruct);
     M5.Lcd.setCursor(30, 40);
     M5.Lcd.printf("%02d:%02d:%02d", TimeStruct.Hours, TimeStruct.Minutes, TimeStruct.Seconds);
-    
-    // draw a line at x=0, y=80, len=255
-    //M5.Lcd.drawFastHLine(0, 100, 350, TFT_WHITE);
 
     // write date
     M5.Lcd.setCursor(30, 120);
