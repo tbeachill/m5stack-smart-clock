@@ -1,0 +1,69 @@
+#include <NTPClient.h>
+#include <WiFiUdp.h>
+#include <RTC.h>
+#include <M5Core2.h>
+
+WiFiUDP ntpUDP;
+NTPClient timeClient(ntpUDP);
+String weekday[7] = {"Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"};
+
+std::pair<RTC_DateTypeDef, RTC_TimeTypeDef> InitTime()
+{
+    // get the current time and date from the internet
+
+    timeClient.begin();
+
+    while(!timeClient.update())
+    {
+        timeClient.forceUpdate();
+    }
+    
+    // get the current time
+    time_t t = timeClient.getEpochTime();
+    tm *gmtm = gmtime(&t);
+    
+    // populate a timestruct
+    RTC_TimeTypeDef TimeStruct;
+    TimeStruct.Hours = gmtm->tm_hour;
+    TimeStruct.Minutes = gmtm->tm_min;
+    TimeStruct.Seconds = gmtm->tm_sec;
+
+    // populate a datestruct
+    RTC_DateTypeDef DateStruct;
+    DateStruct.Date = gmtm->tm_mday;
+    DateStruct.Month = (gmtm->tm_mon) + 1;
+    DateStruct.Year = (gmtm->tm_year) + 1900;
+    DateStruct.WeekDay = (gmtm->tm_wday); // 0 = Sunday
+
+    // package up the date and time
+    std::pair<RTC_DateTypeDef, RTC_TimeTypeDef> packed = std::make_pair(DateStruct, TimeStruct);
+    
+    return packed;
+}
+
+void DisplayTime(RTC_DateTypeDef DateStruct, RTC_TimeTypeDef TimeStruct)
+{
+    // print out the current time and date
+
+    // update screen
+    M5.Lcd.setTextColor(TFT_WHITE,TFT_BLACK);
+
+    // write time
+    M5.Lcd.setTextSize(5);
+    M5.Rtc.GetTime(&TimeStruct);
+    M5.Rtc.GetDate(&DateStruct);
+    M5.Lcd.setCursor(30, 40);
+    M5.Lcd.printf("%02d:%02d:%02d", TimeStruct.Hours, TimeStruct.Minutes, TimeStruct.Seconds);
+    
+    // draw a line at x=0, y=80, len=255
+    //M5.Lcd.drawFastHLine(0, 100, 350, TFT_WHITE);
+
+    // write date
+    M5.Lcd.setCursor(30, 120);
+    M5.Lcd.setTextSize(4);
+    M5.Lcd.printf("%02d %02d %04d", DateStruct.Date, DateStruct.Month,DateStruct.Year);
+    
+    // write weekday
+    M5.Lcd.setCursor(30, 170);
+    M5.Lcd.printf("%s", weekday[DateStruct.WeekDay]);
+}
