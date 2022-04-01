@@ -12,15 +12,19 @@ std::pair<RTC_DateTypeDef, RTC_TimeTypeDef> InitTime()
     // get the current time and date from the internet
 
     timeClient.begin();
+    timeClient.setTimeOffset(3600);
 
     while(!timeClient.update())
     {
         timeClient.forceUpdate();
     }
-    
+
     // get the current time
     time_t t = timeClient.getEpochTime();
     tm *gmtm = gmtime(&t);
+
+    // check if DST is in effect
+    if(gmtm->tm_isdst) gmtm += 3600;
     
     // populate a timestruct
     RTC_TimeTypeDef TimeStruct;
