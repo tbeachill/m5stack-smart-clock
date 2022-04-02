@@ -1,4 +1,4 @@
-//#include <M5Core2.h>
+#include <M5Core2.h>
 
 void AutoBrightness(RTC_TimeTypeDef timeStruct)
 {

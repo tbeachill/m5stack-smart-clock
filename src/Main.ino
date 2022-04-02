@@ -1,9 +1,12 @@
 #include <M5Core2.h>
 #include <Clock.h>
 #include <Kasa.h>
+#include <Roblox.h>
 
 RTC_TimeTypeDef TimeStruct;
 RTC_DateTypeDef DateStruct;
+int lastPressed = 1;
+bool set = false;
 
 /* After M5Core2 is started or reset, the program in the setup() function will be executed, and this part will only be executed once. */
 void setup(){
@@ -32,13 +35,62 @@ void setup(){
 
   // turn off LED
   M5.Axp.SetLed(0);
+
 }
 
 /* After the program in the setup() function is executed, the program in the loop() function will be executed
 The loop() function is an endless loop, in which the program will continue to run repeatedly */
 void loop() {
-  DisplayTime(DateStruct, TimeStruct);
+  M5.update();    
   AutoBrightness(TimeStruct);
   
-  delay(1000);
+  // listener for button presses
+  if (M5.BtnA.isPressed())
+  {
+    lastPressed = 0;
+  }
+  else if (M5.BtnB.isPressed())
+  {
+    lastPressed = 1;
+  }
+  else if (M5.BtnC.isPressed())
+  {
+    lastPressed = 2;
+  }
+
+  // display one of the screens depending on which button was last pressed
+  if (lastPressed == 0)
+  {
+    DisplayTime(DateStruct, TimeStruct);
+    delay(500);
+  }
+  else if (lastPressed == 1)
+  {
+    RblxUpdate();
+    delay(1000)
+    RblxPrintInfo();
+
+    // don't do anything unless a button is pressed
+    while (!M5.BtnA.isPressed() && !M5.BtnB.isPressed() && !M5.BtnC.isPressed())
+    {
+      // update every 15 minutes
+      if (TimeStruct.Minutes == 15 && TimeStruct.Seconds == 0)
+      {
+        RblxUpdate();
+        RblxPrintInfo();
+      }
+      
+      delay(500);
+      M5.update();
+    }
+
+    // clear the screen when a button has been pressed
+    M5.Lcd.clear();
+  }
+  else if (lastPressed == 2)
+  {
+    M5.Lcd.clear();
+    delay(500);
+  }
+
 }

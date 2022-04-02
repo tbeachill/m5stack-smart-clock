@@ -12,20 +12,13 @@ std::pair<RTC_DateTypeDef, RTC_TimeTypeDef> InitTime()
     // get the current time and date from the internet
 
     timeClient.begin();
-    timeClient.setTimeOffset(3600);
-
-    while(!timeClient.update())
-    {
-        timeClient.forceUpdate();
-    }
-
-    // get the current time
-    time_t t = timeClient.getEpochTime();
-    tm *gmtm = gmtime(&t);
+    
+    tm* gmtm = GetTime(0);
 
     // check if DST is in effect
-    if(gmtm->tm_isdst) gmtm += 3600;
-    
+    if(gmtm->tm_mon > 2 && gmtm->tm_mon < 10)
+        gmtm = GetTime(3600);
+
     // populate a timestruct
     RTC_TimeTypeDef TimeStruct;
     TimeStruct.Hours = gmtm->tm_hour;
@@ -45,6 +38,22 @@ std::pair<RTC_DateTypeDef, RTC_TimeTypeDef> InitTime()
     return packed;
 }
 
+tm* GetTime(int offset)
+{
+    timeClient.setTimeOffset(offset);
+
+    while(!timeClient.update())
+    {
+        timeClient.forceUpdate();
+    }
+
+    // get the current time
+    time_t t = timeClient.getEpochTime();
+    tm *gmtm = gmtime(&t);
+
+    return gmtm;
+}
+
 void DisplayTime(RTC_DateTypeDef DateStruct, RTC_TimeTypeDef TimeStruct)
 {
     // print out the current time and date
@@ -62,7 +71,7 @@ void DisplayTime(RTC_DateTypeDef DateStruct, RTC_TimeTypeDef TimeStruct)
     // write date
     M5.Lcd.setCursor(30, 120);
     M5.Lcd.setTextSize(4);
-    M5.Lcd.printf("%02d %02d %04d", DateStruct.Date, DateStruct.Month,DateStruct.Year);
+    M5.Lcd.printf("%02d %02d %04d", DateStruct.Date, DateStruct.Month, DateStruct.Year);
     
     // write weekday
     M5.Lcd.setCursor(30, 170);
