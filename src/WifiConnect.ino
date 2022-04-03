@@ -11,7 +11,7 @@ void WifiConnect()
 
   while (status != WL_CONNECTED) {
     status = WiFi.begin(WIFI_SSID, WIFI_PW);
-    // wait 10 seconds for connection:
-    delay(10000);
+    // wait 5 seconds for connection:
+    delay(5000);
   }
 }  
