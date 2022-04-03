@@ -25,6 +25,15 @@ void KasaEvent(Action action)
         case Dim100:
             actionURL = KASA_BRIGHTNESS_100;
             break;
+        case kFuschia:
+            actionURL = KASA_COLOUR_FUSCHIA;
+            break;
+        case kYellow:
+            actionURL = KASA_COLOUR_YELLOW;
+            break;
+        case kBlue:
+            actionURL = KASA_COLOUR_BLUE;
+            break;
     }
 
     WiFiClient client;
@@ -36,6 +45,8 @@ void KasaEvent(Action action)
 
     http.end();
 
+    // delay to stop multiple requests at once
+    delay(2000);
+
     return;
 }
-

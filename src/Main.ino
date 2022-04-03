@@ -6,7 +6,7 @@
 
 RTC_TimeTypeDef TimeStruct;
 RTC_DateTypeDef DateStruct;
-int lastPressed = 0;
+int lastPressed = 2;
 bool set = false;
 
 /* After M5Core2 is started or reset, the program in the setup() function will be executed, and this part will only be executed once. */
@@ -106,7 +106,14 @@ void loop() {
   else if (lastPressed == 2)
   {
     M5.Lcd.clear();
-    delay(500);
+    DrawControls();
+
+    while (!M5.BtnA.isPressed() && !M5.BtnB.isPressed() && !M5.BtnC.isPressed())
+    {     
+      
+      delay(500);
+      M5.update();
+    }
   }
 
 }
