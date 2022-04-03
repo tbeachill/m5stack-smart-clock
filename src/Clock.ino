@@ -11,10 +11,9 @@ WiFiUDP ntpUDP;
 NTPClient timeClient(ntpUDP);
 String weekday[7] = {"Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"};
 
+// populate date and time structs
 std::pair<RTC_DateTypeDef, RTC_TimeTypeDef> InitTime()
 {
-    // get the current time and date from the internet
-
     timeClient.begin();
     
     tm* gmtm = GetTime(0);
@@ -42,7 +41,7 @@ std::pair<RTC_DateTypeDef, RTC_TimeTypeDef> InitTime()
     return packed;
 }
 
-
+// get the current time from the internet
 tm* GetTime(int offset)
 {
     timeClient.setTimeOffset(offset);
@@ -59,11 +58,9 @@ tm* GetTime(int offset)
     return gmtm;
 }
 
-
+// print the current time and date to the screen
 void DisplayTime(RTC_DateTypeDef DateStruct, RTC_TimeTypeDef TimeStruct)
 {
-    // print out the current time and date
-
     // update screen
     M5.Lcd.setTextColor(TFT_WHITE,TFT_BLACK);
 
@@ -84,7 +81,7 @@ void DisplayTime(RTC_DateTypeDef DateStruct, RTC_TimeTypeDef TimeStruct)
     M5.Lcd.printf("%s", weekday[DateStruct.WeekDay]);
 }
 
-
+// get whether or not daylight savings is being observed
 int GetDST(tm* gmtm)
 {
     int dst = 0;

@@ -1,10 +1,11 @@
 #include <M5Core2.h>
 #include <Kasa.h>
 
+// background, text, border
 ButtonColors col = {DARKGREY, WHITE, WHITE};
 ButtonColors col2 = {ORANGE, WHITE, WHITE};
 
-
+// draw buttons
 void DrawControls()
 {
     // pos X, pos Y, width, height
@@ -16,6 +17,7 @@ void DrawControls()
     Button colourYellowButton(125, 125, 75, 75, false, "Yellow", col, col2);
     Button colourBlueButton(225, 125, 75, 75, false, "Blue", col, col2);
 
+    // run functions associated with each button on press
     while (!M5.BtnA.isPressed() && !M5.BtnB.isPressed() && !M5.BtnC.isPressed())
     {
         if (toggleButton.isPressed())
