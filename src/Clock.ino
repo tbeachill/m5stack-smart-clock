@@ -42,6 +42,7 @@ std::pair<RTC_DateTypeDef, RTC_TimeTypeDef> InitTime()
     return packed;
 }
 
+
 tm* GetTime(int offset)
 {
     timeClient.setTimeOffset(offset);
@@ -57,6 +58,7 @@ tm* GetTime(int offset)
 
     return gmtm;
 }
+
 
 void DisplayTime(RTC_DateTypeDef DateStruct, RTC_TimeTypeDef TimeStruct)
 {
@@ -81,6 +83,7 @@ void DisplayTime(RTC_DateTypeDef DateStruct, RTC_TimeTypeDef TimeStruct)
     M5.Lcd.setCursor(30, 170);
     M5.Lcd.printf("%s", weekday[DateStruct.WeekDay]);
 }
+
 
 int GetDST(tm* gmtm)
 {

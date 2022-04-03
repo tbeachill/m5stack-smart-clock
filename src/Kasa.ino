@@ -3,11 +3,9 @@
 #include <HTTPClient.h>
 #include <Kasa.h>
 
-
+// send a webhook request to IFTTT for a Kasa smart bulb
 void KasaEvent(Action action)
 {
-    // send a webhook request to IFTTT for a Kasa smart bulb
-
     // check that wifi is connected
     if (WiFi.status() != WL_CONNECTED)
     {

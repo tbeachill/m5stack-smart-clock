@@ -9,12 +9,14 @@
 RblxGameInfo obbyInfo;
 RblxGameInfo clubInfo;
 
+// update the currently held information
 void RblxUpdate()
 {
     obbyInfo = RblxGetInfo(Obby);
     clubInfo = RblxGetInfo(Club);
 }
 
+// print the information to the screen
 void RblxPrintInfo()
 {
     M5.Lcd.clear();
@@ -25,10 +27,10 @@ void RblxPrintInfo()
 
 }
 
+// get current info on own roblox games
 RblxGameInfo RblxGetInfo(Place place)
 {
     RblxGameInfo rb;
-    // send a webhook request to IFTTT for a Kasa smart bulb
 
     // check that wifi is connected
     if (WiFi.status() != WL_CONNECTED)
