@@ -2,10 +2,11 @@
 #include <Clock.h>
 #include <Kasa.h>
 #include <Roblox.h>
+#include<Weather.h>
 
 RTC_TimeTypeDef TimeStruct;
 RTC_DateTypeDef DateStruct;
-int lastPressed = 1;
+int lastPressed = 0;
 bool set = false;
 
 /* After M5Core2 is started or reset, the program in the setup() function will be executed, and this part will only be executed once. */
@@ -61,20 +62,35 @@ void loop() {
   // display one of the screens depending on which button was last pressed
   if (lastPressed == 0)
   {
-    DisplayTime(DateStruct, TimeStruct);
-    delay(500);
+    WeatherUpdate();
+
+    while (!M5.BtnA.isPressed() && !M5.BtnB.isPressed() && !M5.BtnC.isPressed())
+    {
+      // update every 2 hours
+      if (TimeStruct.Hours % 2 == 0 && TimeStruct.Minutes == 0 && TimeStruct.Seconds == 0)
+      {
+        WeatherUpdate();
+        WeatherPrintInfo();
+      }
+      
+      DisplayTime(DateStruct, TimeStruct);
+      WeatherPrintInfo();
+      delay(500);
+      M5.update();
+    }
+
   }
   else if (lastPressed == 1)
   {
     RblxUpdate();
-    delay(1000)
+    delay(1000);
     RblxPrintInfo();
 
     // don't do anything unless a button is pressed
     while (!M5.BtnA.isPressed() && !M5.BtnB.isPressed() && !M5.BtnC.isPressed())
     {
       // update every 15 minutes
-      if (TimeStruct.Minutes == 15 && TimeStruct.Seconds == 0)
+      if (TimeStruct.Minutes % 15 == 0 && TimeStruct.Seconds == 0)
       {
         RblxUpdate();
         RblxPrintInfo();

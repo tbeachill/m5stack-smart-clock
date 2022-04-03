@@ -5,18 +5,28 @@
 #include <WiFiClientSecure.h>
 #include <Weather.h>
 
-Weather currentWeather;
+WeatherStruct currentWeather;
 
 // update the currently held information
-void RblxUpdate()
+void WeatherUpdate()
 {
     currentWeather = GetWeather();
 }
 
-// get the current weather from the internet
-Weather GetWeather()
+// print the information to the screen
+void WeatherPrintInfo()
 {
-    Weather weather;
+    M5.Lcd.setTextSize(2);
+    M5.Lcd.setCursor(0, 0);
+    M5.Lcd.printf("%f\n", currentWeather.MinTemp);
+    M5.Lcd.printf("%f\n", currentWeather.MaxTemp);
+
+}
+
+// get the current weather from the internet
+WeatherStruct GetWeather()
+{
+    WeatherStruct weather;
 
     // check that wifi is connected
     if (WiFi.status() != WL_CONNECTED)
