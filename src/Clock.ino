@@ -2,6 +2,10 @@
 #include <WiFiUdp.h>
 #include <RTC.h>
 #include <M5Core2.h>
+#include <HTTPClient.h>
+#include <ArduinoJson.h>
+#include <WiFiClientSecure.h>
+#include <Config.h>
 
 WiFiUDP ntpUDP;
 NTPClient timeClient(ntpUDP);
@@ -16,7 +20,7 @@ std::pair<RTC_DateTypeDef, RTC_TimeTypeDef> InitTime()
     tm* gmtm = GetTime(0);
 
     // check if DST is in effect
-    if(gmtm->tm_mon > 2 && gmtm->tm_mon < 10)
+    if(GetDST(gmtm) == 1)
         gmtm = GetTime(3600);
 
     // populate a timestruct
@@ -76,4 +80,42 @@ void DisplayTime(RTC_DateTypeDef DateStruct, RTC_TimeTypeDef TimeStruct)
     // write weekday
     M5.Lcd.setCursor(30, 170);
     M5.Lcd.printf("%s", weekday[DateStruct.WeekDay]);
+}
+
+int GetDST(tm* gmtm)
+{
+    int dst = 0;
+
+    // set rough dst in case API cant be reached
+    if(gmtm->tm_mon > 2 && gmtm->tm_mon < 10)
+        dst = 1;
+
+    if (WiFi.status() != WL_CONNECTED)
+    {
+        return dst;
+    }
+
+    WiFiClientSecure client;
+    client.setInsecure();
+    HTTPClient http;
+
+    // get the current timezone offset
+    http.begin(client, WEATHER_API);
+    int httpResponse = http.GET();
+
+    // parse json data
+    if (httpResponse == 200)
+    {
+        DynamicJsonDocument doc(2048);
+        String jsonreq = http.getString();
+
+        deserializeJson(doc, jsonreq);
+
+        // extract timezone offset to int
+        dst = doc["tzoffset"];;
+
+        http.end();
+    }
+
+    return dst;
 }
