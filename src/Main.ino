@@ -72,6 +72,18 @@ void loop() {
         WeatherUpdate();
         WeatherPrintInfo();
       }
+
+      // if the screen is touched, open the alarm set screen
+      if (M5.Touch.ispressed())
+      {
+        ClearScreen();
+        DrawAlarmControls();
+        while (true)
+        {
+          // kek
+        }
+
+      }
       
       DisplayTime(DateStruct, TimeStruct);
       WeatherPrintInfo();
@@ -108,7 +120,7 @@ void loop() {
   else if (lastPressed == 2)
   {
     M5.Lcd.clear();
-    DrawControls();
+    DrawLightControls();
 
     while (!M5.BtnA.isPressed() && !M5.BtnB.isPressed() && !M5.BtnC.isPressed())
     {
