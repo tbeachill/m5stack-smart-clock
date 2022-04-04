@@ -9,7 +9,7 @@
 
 WiFiUDP ntpUDP;
 NTPClient timeClient(ntpUDP);
-String weekday[7] = {"Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"};
+String weekday[7] = {"SUN", "MON", "TUE", "WED", "THU", "FRI", "SAT"};
 
 // populate date and time structs
 std::pair<RTC_DateTypeDef, RTC_TimeTypeDef> InitTime()
@@ -53,6 +53,7 @@ tm* GetTime(int offset)
 
     // get the current time
     time_t t = timeClient.getEpochTime();
+    delay(5000);
     tm *gmtm = gmtime(&t);
 
     return gmtm;

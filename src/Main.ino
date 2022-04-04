@@ -6,7 +6,7 @@
 
 RTC_TimeTypeDef TimeStruct;
 RTC_DateTypeDef DateStruct;
-int lastPressed = 2;
+int lastPressed = 0;
 bool set = false;
 
 /* After M5Core2 is started or reset, the program in the setup() function will be executed, and this part will only be executed once. */
@@ -32,7 +32,7 @@ void setup(){
   M5.Lcd.println("SUCCESS");
   M5.Lcd.setTextColor(WHITE);
 
-  M5.Lcd.clear();
+  ClearScreen();
 
   // turn off LED
   M5.Axp.SetLed(0);

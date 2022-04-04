@@ -4,6 +4,7 @@
 #include <ArduinoJson.h>
 #include <WiFiClientSecure.h>
 #include <Weather.h>
+#include <M5Core2.h>
 
 WeatherStruct currentWeather;
 
@@ -11,16 +12,41 @@ WeatherStruct currentWeather;
 void WeatherUpdate()
 {
     currentWeather = GetWeather();
+
+    return;
 }
 
 // print the information to the screen
 void WeatherPrintInfo()
 {
     M5.Lcd.setTextSize(2);
-    M5.Lcd.setCursor(0, 0);
-    M5.Lcd.printf("%f\n", currentWeather.MinTemp);
-    M5.Lcd.printf("%f\n", currentWeather.MaxTemp);
+    M5.Lcd.setCursor(150, 170);
 
+    M5.Lcd.setTextColor(TFT_RED,TFT_BLACK);
+    M5.Lcd.printf("%.1f", currentWeather.MaxTemp);
+
+    M5.Lcd.setTextColor(TFT_WHITE,TFT_BLACK);
+    M5.Lcd.print(" / ");
+
+    M5.Lcd.setTextColor(TFT_BLUE,TFT_BLACK);
+    M5.Lcd.printf("%.1f\n", currentWeather.MinTemp);
+
+
+    M5.Lcd.setCursor(150, 190);
+
+    M5.Lcd.setTextColor(TFT_DARKCYAN,TFT_BLACK);
+    M5.Lcd.printf("%.2f", currentWeather.PrecipAmount);
+
+    M5.Lcd.setTextColor(TFT_WHITE,TFT_BLACK);
+    M5.Lcd.print("\" ");
+
+    M5.Lcd.setTextColor(TFT_DARKCYAN,TFT_BLACK);
+    M5.Lcd.printf("%i", currentWeather.PrecipProb);
+
+    M5.Lcd.setTextColor(TFT_WHITE,TFT_BLACK);
+    M5.Lcd.print("%");
+
+    return;
 }
 
 // get the current weather from the internet

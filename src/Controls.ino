@@ -47,6 +47,8 @@ void DrawControls()
 
         M5.update();
     }
+
+    ClearScreen();
     
     return;
 }

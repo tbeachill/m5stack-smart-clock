@@ -14,3 +14,14 @@ void AutoBrightness(RTC_TimeTypeDef timeStruct)
     
     return;
 }
+
+// clear screen and set cursor and font to defaults
+void ClearScreen()
+{
+    M5.Lcd.clearDisplay();
+    M5.Lcd.setCursor(0, 20);
+    M5.Lcd.setTextSize(1);
+    M5.Lcd.setTextColor(WHITE);
+
+    M5.Lcd.setTextFont(GLCD);
+}
