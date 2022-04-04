@@ -113,7 +113,7 @@ int GetDST(tm* gmtm)
         deserializeJson(doc, jsonreq);
 
         // extract timezone offset to int
-        dst = doc["tzoffset"];;
+        dst = doc["tzoffset"];
 
         http.end();
     }

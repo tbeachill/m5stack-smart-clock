@@ -75,6 +75,7 @@ void loop() {
       
       DisplayTime(DateStruct, TimeStruct);
       WeatherPrintInfo();
+      AutoBrightness(TimeStruct);
       delay(500);
       M5.update();
     }
@@ -97,6 +98,7 @@ void loop() {
       }
       
       delay(500);
+      AutoBrightness(TimeStruct);
       M5.update();
     }
 
@@ -109,11 +111,10 @@ void loop() {
     DrawControls();
 
     while (!M5.BtnA.isPressed() && !M5.BtnB.isPressed() && !M5.BtnC.isPressed())
-    {     
-      
+    {
       delay(500);
+      AutoBrightness(TimeStruct);
       M5.update();
     }
   }
-
 }
