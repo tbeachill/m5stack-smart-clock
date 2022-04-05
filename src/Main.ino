@@ -66,7 +66,7 @@ void loop() {
   {
     WeatherUpdate();
 
-    while (!M5.BtnA.isPressed() && !M5.BtnB.isPressed() && !M5.BtnC.isPressed())
+    while (!M5.BtnB.isPressed() && !M5.BtnC.isPressed())
     {
       // update every 2 hours
       if (TimeStruct.Hours % 2 == 0 && TimeStruct.Minutes == 0 && TimeStruct.Seconds == 0)
@@ -99,7 +99,7 @@ void loop() {
     RblxPrintInfo();
 
     // don't do anything unless a button is pressed
-    while (!M5.BtnA.isPressed() && !M5.BtnB.isPressed() && !M5.BtnC.isPressed())
+    while (!M5.BtnA.isPressed() && !M5.BtnC.isPressed())
     {
       // update every 15 minutes
       if (TimeStruct.Minutes % 15 == 0 && TimeStruct.Seconds == 0)
@@ -122,7 +122,7 @@ void loop() {
     M5.Lcd.clear();
     DrawLightControls();
 
-    while (!M5.BtnA.isPressed() && !M5.BtnB.isPressed() && !M5.BtnC.isPressed())
+    while (!M5.BtnA.isPressed() && !M5.BtnB.isPressed())
     {
       AutoBrightness(&TimeStruct);
 

@@ -19,7 +19,6 @@ void RblxUpdate()
 // print the information to the screen
 void RblxPrintInfo()
 {
-    M5.Lcd.clear();
     M5.Lcd.setTextSize(2);
     M5.Lcd.setCursor(0, 0);
     M5.Lcd.printf("Obby visitors: %i\n", obbyInfo.Visits);
