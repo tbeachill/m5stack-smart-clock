@@ -36,9 +36,8 @@ void setup(){
 
   ClearScreen();
 
-  // turn off LED
   M5.Axp.SetLed(0);
-
+  M5.Axp.SetSpkEnable(1);
 }
 
 /* After the program in the setup() function is executed, the program in the loop() function will be executed
@@ -101,8 +100,8 @@ void loop() {
     // don't do anything unless a button is pressed
     while (!M5.BtnA.isPressed() && !M5.BtnC.isPressed())
     {
-      // update every 15 minutes
-      if (TimeStruct.Minutes % 15 == 0 && TimeStruct.Seconds == 0)
+      // update every 5 minutes
+      if (TimeStruct.Minutes % 5 == 0 && TimeStruct.Seconds == 0)
       {
         RblxUpdate();
       }
