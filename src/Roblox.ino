@@ -5,6 +5,7 @@
 #include <ArduinoJson.h>
 #include <ssl_client.h>
 #include <WiFiClientSecure.h>
+#include <M5Core2.h>
 
 RblxGameInfo obbyInfo;
 RblxGameInfo clubInfo;
@@ -21,9 +22,34 @@ void RblxPrintInfo()
 {
     M5.Lcd.setTextSize(2);
     M5.Lcd.setCursor(0, 0);
-    M5.Lcd.printf("Obby visitors: %i\n", obbyInfo.Visits);
-    M5.Lcd.printf("Club visitors: %i\n", clubInfo.Visits);
+    M5.Lcd.println("--------------------------");
+    M5.Lcd.println("|        | obby  | club  |");
+    M5.Lcd.println("|------------------------|");
 
+    M5.Lcd.print("|playing | ");
+    FormatNumber(obbyInfo.Playing, true);
+    FormatNumber(clubInfo.Playing, false);
+    M5.Lcd.println();
+
+
+    M5.Lcd.print("|visits  | ");
+    FormatNumber(obbyInfo.Visits, true);
+    FormatNumber(clubInfo.Visits, false);
+    M5.Lcd.println();
+
+    M5.Lcd.print("|favs    | ");
+    FormatNumber(obbyInfo.Favourites, true);
+    FormatNumber(clubInfo.Favourites, false);
+    M5.Lcd.println();
+
+    M5.Lcd.println("--------------------------");
+}
+
+// format a number to 0.0k if 1000 or over
+void FormatNumber(int number, bool space)
+{
+    number > 999 ? M5.Lcd.printf("%4.1fk |", (float) number / 1000) : M5.Lcd.printf("%4d  |", number);
+    if (space) M5.Lcd.print(" ");
 }
 
 // get current info on own roblox games
