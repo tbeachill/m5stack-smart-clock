@@ -108,6 +108,7 @@ void loop() {
       
       RblxPrintInfo();
       AutoBrightness(&TimeStruct);
+      AlarmListener(&TimeStruct, &AlarmTime, &AlarmSet);
 
       delay(500);
       M5.update();
@@ -124,6 +125,7 @@ void loop() {
     while (!M5.BtnA.isPressed() && !M5.BtnB.isPressed())
     {
       AutoBrightness(&TimeStruct);
+      AlarmListener(&TimeStruct, &AlarmTime, &AlarmSet);
 
       delay(500);
       M5.update();
