@@ -3,11 +3,13 @@
 #include <Kasa.h>
 #include <Roblox.h>
 #include<Weather.h>
+#include <Alarm.h>
 
 RTC_TimeTypeDef TimeStruct;
 RTC_DateTypeDef DateStruct;
-int lastPressed = 0;
-bool set = false;
+int LastPressed = 0;
+bool AlarmSet = false;
+HourMin AlarmTime = {0, 0};
 
 /* After M5Core2 is started or reset, the program in the setup() function will be executed, and this part will only be executed once. */
 void setup(){
@@ -43,24 +45,24 @@ void setup(){
 The loop() function is an endless loop, in which the program will continue to run repeatedly */
 void loop() {
   M5.update();    
-  AutoBrightness(TimeStruct);
-  
+  AutoBrightness(&TimeStruct);
+
   // listener for button presses
   if (M5.BtnA.isPressed())
   {
-    lastPressed = 0;
+    LastPressed = 0;
   }
   else if (M5.BtnB.isPressed())
   {
-    lastPressed = 1;
+    LastPressed = 1;
   }
   else if (M5.BtnC.isPressed())
   {
-    lastPressed = 2;
+    LastPressed = 2;
   }
 
   // display one of the screens depending on which button was last pressed
-  if (lastPressed == 0)
+  if (LastPressed == 0)
   {
     WeatherUpdate();
 
@@ -77,23 +79,20 @@ void loop() {
       if (M5.Touch.ispressed())
       {
         ClearScreen();
-        DrawAlarmControls();
-        while (true)
-        {
-          // kek
-        }
-
+        AlarmControl(&AlarmTime, &AlarmSet);
       }
       
-      DisplayTime(DateStruct, TimeStruct);
+      DisplayTime(&DateStruct, &TimeStruct);
       WeatherPrintInfo();
-      AutoBrightness(TimeStruct);
+      AutoBrightness(&TimeStruct);
+      AlarmListener(&TimeStruct, &AlarmTime, &AlarmSet);
       delay(500);
       M5.update();
     }
 
+    ClearScreen();
   }
-  else if (lastPressed == 1)
+  else if (LastPressed == 1)
   {
     RblxUpdate();
     delay(1000);
@@ -110,14 +109,14 @@ void loop() {
       }
       
       delay(500);
-      AutoBrightness(TimeStruct);
+      AutoBrightness(&TimeStruct);
       M5.update();
     }
 
     // clear the screen when a button has been pressed
-    M5.Lcd.clear();
+    ClearScreen();
   }
-  else if (lastPressed == 2)
+  else if (LastPressed == 2)
   {
     M5.Lcd.clear();
     DrawLightControls();
@@ -125,8 +124,10 @@ void loop() {
     while (!M5.BtnA.isPressed() && !M5.BtnB.isPressed() && !M5.BtnC.isPressed())
     {
       delay(500);
-      AutoBrightness(TimeStruct);
+      AutoBrightness(&TimeStruct);
       M5.update();
     }
+
+    ClearScreen();
   }
 }

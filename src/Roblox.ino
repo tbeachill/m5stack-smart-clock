@@ -73,6 +73,8 @@ RblxGameInfo RblxGetInfo(Place place)
         rb.Visits = data_0["visits"];
         rb.Playing = data_0["playing"];
 
+        delay(1000);
+
         return rb;
     }
     else

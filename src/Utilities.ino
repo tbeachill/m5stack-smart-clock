@@ -1,9 +1,9 @@
 #include <M5Core2.h>
 
 // auto dim between 10pm and 8am
-void AutoBrightness(RTC_TimeTypeDef timeStruct)
+void AutoBrightness(RTC_TimeTypeDef *time)
 {
-    if (timeStruct.Hours > 21 || timeStruct.Hours < 8)
+    if (time->Hours > 21 || time->Hours < 8)
     {
         M5.Axp.SetLcdVoltage(2500);
     }

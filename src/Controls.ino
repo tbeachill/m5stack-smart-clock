@@ -44,7 +44,5 @@ void DrawLightControls()
         M5.update();
     }
 
-    ClearScreen();
-    
     return;
 }

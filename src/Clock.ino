@@ -60,26 +60,26 @@ tm* GetTime(int offset)
 }
 
 // print the current time and date to the screen
-void DisplayTime(RTC_DateTypeDef DateStruct, RTC_TimeTypeDef TimeStruct)
+void DisplayTime(RTC_DateTypeDef *date, RTC_TimeTypeDef *time)
 {
     // update screen
     M5.Lcd.setTextColor(TFT_WHITE,TFT_BLACK);
 
     // write time
     M5.Lcd.setTextSize(5);
-    M5.Rtc.GetTime(&TimeStruct);
-    M5.Rtc.GetDate(&DateStruct);
+    M5.Rtc.GetTime(time);
+    M5.Rtc.GetDate(date);
     M5.Lcd.setCursor(30, 40);
-    M5.Lcd.printf("%02d:%02d:%02d", TimeStruct.Hours, TimeStruct.Minutes, TimeStruct.Seconds);
+    M5.Lcd.printf("%02d:%02d:%02d", time->Hours, time->Minutes, time->Seconds);
 
     // write date
     M5.Lcd.setCursor(30, 120);
     M5.Lcd.setTextSize(4);
-    M5.Lcd.printf("%02d %02d %04d", DateStruct.Date, DateStruct.Month, DateStruct.Year);
+    M5.Lcd.printf("%02d %02d %04d", date->Date, date->Month, date->Year);
     
     // write weekday
     M5.Lcd.setCursor(30, 170);
-    M5.Lcd.printf("%s", weekday[DateStruct.WeekDay]);
+    M5.Lcd.printf("%s", weekday[date->WeekDay]);
 }
 
 // get whether or not daylight savings is being observed
