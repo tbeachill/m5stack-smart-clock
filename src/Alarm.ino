@@ -7,9 +7,9 @@ ButtonColors col2 = {ORANGE, WHITE, WHITE};
 
 void AlarmControl(HourMin *alarm, bool *set)
 {
-    Button hourUpButton    (60, 20, 75, 50, false, "+", col1, col2);
-    Button hourDownButton  (60, 155, 75, 50, false, "-", col1, col2);
-    Button minuteUpButton  (185, 20, 75, 50, false, "+", col1, col2);
+    Button hourUpButton(60, 20, 75, 50, false, "+", col1, col2);
+    Button hourDownButton(60, 155, 75, 50, false, "-", col1, col2);
+    Button minuteUpButton(185, 20, 75, 50, false, "+", col1, col2);
     Button minuteDownButton(185, 155, 75, 50, false, "-", col1, col2);
 
     M5.Lcd.setTextSize(1);
@@ -72,7 +72,8 @@ void AlarmListener(RTC_TimeTypeDef *time, HourMin *alarm, bool *set)
 {
     if ((alarm->Hour == time->Hours) && (alarm->Minute == time->Minutes) && *set == true)
     {
-        while (!M5.BtnA.isPressed() && !M5.BtnB.isPressed() && !M5.BtnC.isPressed())
+        // cancel the alarm on any touch
+        while (!M5.BtnA.isPressed() && !M5.BtnB.isPressed() && !M5.BtnC.isPressed() && !M5.Touch.ispressed())
         {
             // play alarm
         }
