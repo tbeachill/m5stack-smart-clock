@@ -6,6 +6,7 @@
 #include <ArduinoJson.h>
 #include <WiFiClientSecure.h>
 #include <Config.h>
+#include <Alarm.h>
 
 WiFiUDP ntpUDP;
 NTPClient timeClient(ntpUDP);
@@ -60,7 +61,7 @@ tm* GetTime(int offset)
 }
 
 // print the current time and date to the screen
-void DisplayTime(RTC_DateTypeDef *date, RTC_TimeTypeDef *time)
+void DisplayTime(RTC_DateTypeDef *date, RTC_TimeTypeDef *time, bool *alarmSet)
 {
     // update screen
     M5.Lcd.setTextColor(TFT_WHITE,TFT_BLACK);
@@ -71,6 +72,16 @@ void DisplayTime(RTC_DateTypeDef *date, RTC_TimeTypeDef *time)
     M5.Rtc.GetDate(date);
     M5.Lcd.setCursor(30, 40);
     M5.Lcd.printf("%02d:%02d:%02d", time->Hours, time->Minutes, time->Seconds);
+
+    // display if alarm is set
+    if (*alarmSet)
+    {
+        M5.Lcd.setTextSize(2);
+        M5.Lcd.setCursor(280, 40);
+        M5.Lcd.setTextColor(YELLOW);
+        M5.Lcd.print("AL");
+        M5.Lcd.setTextColor(WHITE); 
+    }
 
     // write date
     M5.Lcd.setCursor(30, 120);

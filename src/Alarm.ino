@@ -73,10 +73,10 @@ void AlarmListener(RTC_TimeTypeDef *time, HourMin *alarm, bool *set)
     if ((alarm->Hour == time->Hours) && (alarm->Minute == time->Minutes) && *set == true)
     {
         while (!M5.BtnA.isPressed() && !M5.BtnB.isPressed() && !M5.BtnC.isPressed())
-    {
-      // play alarm
-    }
+        {
+            // play alarm
+        }
 
-    *set = false;
-  }
+        *set = false;
+    }
 }

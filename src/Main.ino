@@ -82,10 +82,11 @@ void loop() {
         AlarmControl(&AlarmTime, &AlarmSet);
       }
       
-      DisplayTime(&DateStruct, &TimeStruct);
+      DisplayTime(&DateStruct, &TimeStruct, &AlarmSet);
       WeatherPrintInfo();
       AutoBrightness(&TimeStruct);
       AlarmListener(&TimeStruct, &AlarmTime, &AlarmSet);
+
       delay(500);
       M5.update();
     }
@@ -95,7 +96,6 @@ void loop() {
   else if (LastPressed == 1)
   {
     RblxUpdate();
-    delay(1000);
     RblxPrintInfo();
 
     // don't do anything unless a button is pressed
@@ -105,11 +105,12 @@ void loop() {
       if (TimeStruct.Minutes % 15 == 0 && TimeStruct.Seconds == 0)
       {
         RblxUpdate();
-        RblxPrintInfo();
       }
       
-      delay(500);
+      RblxPrintInfo();
       AutoBrightness(&TimeStruct);
+
+      delay(500);
       M5.update();
     }
 
@@ -123,8 +124,9 @@ void loop() {
 
     while (!M5.BtnA.isPressed() && !M5.BtnB.isPressed() && !M5.BtnC.isPressed())
     {
-      delay(500);
       AutoBrightness(&TimeStruct);
+
+      delay(500);
       M5.update();
     }
 
