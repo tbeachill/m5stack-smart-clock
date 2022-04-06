@@ -82,6 +82,11 @@ void DisplayTime(RTC_DateTypeDef *date, RTC_TimeTypeDef *time, bool *alarmSet)
         M5.Lcd.print("AL");
         M5.Lcd.setTextColor(WHITE); 
     }
+    else
+    {
+        // fill rectangle to remove alarm status without doing a clear
+        M5.Lcd.fillRect(265, 20, 40, 40, TFT_BLACK);
+    }
 
     // write date
     M5.Lcd.setCursor(30, 120);

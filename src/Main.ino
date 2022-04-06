@@ -36,8 +36,10 @@ void setup(){
 
   ClearScreen();
 
+  // turn off led
   M5.Axp.SetLed(0);
-  M5.Axp.SetSpkEnable(1);
+  // set vibration intensity
+  M5.Axp.SetLDOVoltage(3, 3);
 }
 
 /* After the program in the setup() function is executed, the program in the loop() function will be executed
@@ -119,7 +121,6 @@ void loop() {
   }
   else if (LastPressed == 2)
   {
-    M5.Lcd.clear();
     DrawLightControls();
 
     while (!M5.BtnA.isPressed() && !M5.BtnB.isPressed())
@@ -132,5 +133,6 @@ void loop() {
     }
 
     ClearScreen();
+
   }
 }

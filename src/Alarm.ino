@@ -1,9 +1,16 @@
 #include <M5Core2.h>
 #include <Alarm.h>
+#include <SPIFFS.h>
+#include <AudioFileSourceSPIFFS.h>
+#include <AudioFileSourceID3.h>
+#include <AudioGeneratorMP3.h>
+#include <AudioOutputI2S.h>
+#include "AudioOutputI2SNoDAC.h"
 
 // button colours
 ButtonColors col1 = {DARKGREY, WHITE, WHITE};
 ButtonColors col2 = {ORANGE, WHITE, WHITE};
+
 
 void AlarmControl(HourMin *alarm, bool *set)
 {
@@ -26,6 +33,7 @@ void AlarmControl(HourMin *alarm, bool *set)
         else if (M5.BtnC.isPressed())
         {
             *set = *set ? false : true;
+            delay(200);
             // draw black rectangle to get rid of previous text
             M5.Lcd.fillRect(250, 210, 50, 25, TFT_BLACK);
         }
@@ -75,9 +83,14 @@ void AlarmListener(RTC_TimeTypeDef *time, HourMin *alarm, bool *set)
         // cancel the alarm on any touch
         while (!M5.BtnA.isPressed() && !M5.BtnB.isPressed() && !M5.BtnC.isPressed() && !M5.Touch.ispressed())
         {
-            // play alarm
+            // vibrate for alarm
+            M5.Axp.SetLDOEnable(3, true);
+            delay(500);
+            M5.Axp.SetLDOEnable(3, false);
+            delay(500);
         }
 
+        M5.Axp.SetLDOEnable(3, false);
         *set = false;
     }
 }
