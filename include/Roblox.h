@@ -10,5 +10,9 @@ struct RblxGameInfo
 };
 
 void RblxUpdate(RTC_TimeTypeDef *time);
+
 void RblxPrintInfo();
+
 RblxGameInfo RblxGetInfo(Place place);
+
+void FormatNumber(int number, bool space);

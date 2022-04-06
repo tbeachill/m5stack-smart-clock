@@ -9,3 +9,7 @@ struct HourMin
     int Hour;
     int Minute;
 };
+
+void AlarmControl(HourMin *alarm, bool *set);
+
+void AlarmListener(RTC_TimeTypeDef *time, HourMin *alarm, bool *set);

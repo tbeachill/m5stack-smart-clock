@@ -9,5 +9,7 @@ struct WeatherStruct
 };
 
 WeatherStruct GetWeather();
+
 void WeatherPrintInfo();
+
 void WeatherUpdate(RTC_TimeTypeDef *time);
