@@ -6,12 +6,12 @@
 #include <Weather.h>
 #include <M5Core2.h>
 
-WeatherStruct currentWeather;
+WeatherStruct CurrentWeather;
 
 // update the currently held information
 void WeatherUpdate()
 {
-    currentWeather = GetWeather();
+    CurrentWeather = GetWeather();
 
     return;
 }
@@ -23,25 +23,25 @@ void WeatherPrintInfo()
     M5.Lcd.setCursor(150, 170);
 
     M5.Lcd.setTextColor(TFT_RED,TFT_BLACK);
-    M5.Lcd.printf("%.1f", currentWeather.MaxTemp);
+    M5.Lcd.printf("%.1f", CurrentWeather.MaxTemp);
 
     M5.Lcd.setTextColor(TFT_WHITE,TFT_BLACK);
     M5.Lcd.print(" / ");
 
     M5.Lcd.setTextColor(TFT_BLUE,TFT_BLACK);
-    M5.Lcd.printf("%.1f\n", currentWeather.MinTemp);
+    M5.Lcd.printf("%.1f\n", CurrentWeather.MinTemp);
 
 
     M5.Lcd.setCursor(150, 190);
 
     M5.Lcd.setTextColor(TFT_DARKCYAN,TFT_BLACK);
-    M5.Lcd.printf("%.2f", currentWeather.PrecipAmount);
+    M5.Lcd.printf("%.2f", CurrentWeather.PrecipAmount);
 
     M5.Lcd.setTextColor(TFT_WHITE,TFT_BLACK);
     M5.Lcd.print("\" ");
 
     M5.Lcd.setTextColor(TFT_DARKCYAN,TFT_BLACK);
-    M5.Lcd.printf("%i", currentWeather.PrecipProb);
+    M5.Lcd.printf("%i", CurrentWeather.PrecipProb);
 
     M5.Lcd.setTextColor(TFT_WHITE,TFT_BLACK);
     M5.Lcd.print("%");

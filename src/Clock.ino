@@ -8,14 +8,14 @@
 #include <Config.h>
 #include <Alarm.h>
 
-WiFiUDP ntpUDP;
-NTPClient timeClient(ntpUDP);
-String weekday[7] = {"SUN", "MON", "TUE", "WED", "THU", "FRI", "SAT"};
+WiFiUDP NtpUDP;
+NTPClient TimeClient(NtpUDP);
+String Weekday[7] = {"SUN", "MON", "TUE", "WED", "THU", "FRI", "SAT"};
 
 // populate date and time structs
 std::pair<RTC_DateTypeDef, RTC_TimeTypeDef> InitTime()
 {
-    timeClient.begin();
+    TimeClient.begin();
     
     tm* gmtm = GetTime(0);
 
@@ -45,13 +45,13 @@ std::pair<RTC_DateTypeDef, RTC_TimeTypeDef> InitTime()
 // get the current time from the internet
 tm* GetTime(int offset)
 {
-    timeClient.setTimeOffset(offset);
+    TimeClient.setTimeOffset(offset);
 
-    while(!timeClient.update())
-        timeClient.forceUpdate();
+    while(!TimeClient.update())
+        TimeClient.forceUpdate();
 
     // get the current time
-    time_t t = timeClient.getEpochTime();
+    time_t t = TimeClient.getEpochTime();
     delay(5000);
     tm *gmtm = gmtime(&t);
 
@@ -93,7 +93,7 @@ void DisplayTime(RTC_DateTypeDef *date, RTC_TimeTypeDef *time, bool *alarmSet)
     
     // write weekday
     M5.Lcd.setCursor(30, 170);
-    M5.Lcd.printf("%s", weekday[date->WeekDay]);
+    M5.Lcd.printf("%s", Weekday[date->WeekDay]);
 
     return;
 }
