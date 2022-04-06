@@ -19,9 +19,9 @@ void setup(){
   // attempt to connect to Wifi network:
   M5.Lcd.print("WIFI ");
   WifiConnect();
-  M5.Lcd.setTextColor(GREEN);
+  M5.Lcd.setTextColor(TFT_GREEN);
   M5.Lcd.println("SUCCESS");
-  M5.Lcd.setTextColor(WHITE);
+  M5.Lcd.setTextColor(TFT_WHITE);
 
   // Set the current time and date
   M5.Lcd.print("SETTING TIME: ");
@@ -30,9 +30,9 @@ void setup(){
   TimeStruct = packed.second;
   M5.Rtc.SetTime(&TimeStruct);
   M5.Rtc.SetDate(&DateStruct);
-  M5.Lcd.setTextColor(GREEN);
+  M5.Lcd.setTextColor(TFT_GREEN);
   M5.Lcd.println("SUCCESS");
-  M5.Lcd.setTextColor(WHITE);
+  M5.Lcd.setTextColor(TFT_WHITE);
 
   ClearScreen();
 

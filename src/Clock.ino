@@ -76,9 +76,9 @@ void DisplayTime(RTC_DateTypeDef *date, RTC_TimeTypeDef *time, bool *alarmSet)
     {
         M5.Lcd.setTextSize(2);
         M5.Lcd.setCursor(280, 40);
-        M5.Lcd.setTextColor(YELLOW);
+        M5.Lcd.setTextColor(TFT_YELLOW);
         M5.Lcd.print("AL");
-        M5.Lcd.setTextColor(WHITE); 
+        M5.Lcd.setTextColor(TFT_WHITE); 
     }
     else
     {

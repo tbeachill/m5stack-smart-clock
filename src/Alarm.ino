@@ -1,9 +1,6 @@
 #include <M5Core2.h>
 #include <Alarm.h>
-
-// button colours
-ButtonColors col1 = {DARKGREY, WHITE, WHITE};
-ButtonColors col2 = {ORANGE, WHITE, WHITE};
+#include <Utilities.h>
 
 // choose a time and set/unset the alarm
 void AlarmControl(HourMin *alarm, bool *set)
