@@ -90,7 +90,7 @@ void loop() {
   }
   else if (LastPressed == 1)
   {
-    RblxUpdate();
+    RblxUpdate(&TimeStruct);
     RblxPrintInfo();
 
     // don't do anything unless a button is pressed
@@ -98,7 +98,7 @@ void loop() {
     {
       // update every 5 minutes
       if (TimeStruct.Minutes % 5 == 0 && TimeStruct.Seconds == 0)
-        RblxUpdate();
+        RblxUpdate(&TimeStruct);
       
       RblxPrintInfo();
       AutoBrightness(&TimeStruct);

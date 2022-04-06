@@ -7,24 +7,26 @@
 #include <WiFiClientSecure.h>
 #include <M5Core2.h>
 
-RblxGameInfo obbyInfo;
-RblxGameInfo clubInfo;
-int previousHigh = 0;
+RblxGameInfo ObbyInfo;
+RblxGameInfo ClubInfo;
+int PreviousHigh = 0;
+RTC_TimeTypeDef UpdateTime;
 
 // update the currently held information
-void RblxUpdate()
+void RblxUpdate(RTC_TimeTypeDef *time)
 {
-    obbyInfo = RblxGetInfo(Obby);
-    clubInfo = RblxGetInfo(Club);
+    ObbyInfo = RblxGetInfo(Obby);
+    ClubInfo = RblxGetInfo(Club);
+    UpdateTime = *time;
 
-    if (obbyInfo.Playing + clubInfo.Playing > previousHigh)
+    if (ObbyInfo.Playing + ClubInfo.Playing > PreviousHigh)
     {
         // vibrate once if more people are playing now than the last update
         M5.Axp.SetLDOEnable(3, true);
         delay(100);
         M5.Axp.SetLDOEnable(3, false);
 
-        previousHigh = obbyInfo.Playing + clubInfo.Playing;
+        PreviousHigh = ObbyInfo.Playing + ClubInfo.Playing;
     }
 
     return;
@@ -40,22 +42,23 @@ void RblxPrintInfo()
     M5.Lcd.println("|------------------------|");
 
     M5.Lcd.print("|playing | ");
-    FormatNumber(obbyInfo.Playing, true);
-    FormatNumber(clubInfo.Playing, false);
+    FormatNumber(ObbyInfo.Playing, true);
+    FormatNumber(ClubInfo.Playing, false);
     M5.Lcd.println();
 
 
     M5.Lcd.print("|visits  | ");
-    FormatNumber(obbyInfo.Visits, true);
-    FormatNumber(clubInfo.Visits, false);
+    FormatNumber(ObbyInfo.Visits, true);
+    FormatNumber(ClubInfo.Visits, false);
     M5.Lcd.println();
 
     M5.Lcd.print("|favs    | ");
-    FormatNumber(obbyInfo.Favourites, true);
-    FormatNumber(clubInfo.Favourites, false);
+    FormatNumber(ObbyInfo.Favourites, true);
+    FormatNumber(ClubInfo.Favourites, false);
     M5.Lcd.println();
 
     M5.Lcd.println("--------------------------");
+    M5.Lcd.printf("       last updated: %02d:%02d", UpdateTime.Hours, UpdateTime.Minutes);
 
     return;
 }
