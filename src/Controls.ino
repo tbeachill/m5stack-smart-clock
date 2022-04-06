@@ -14,7 +14,7 @@ void DrawLightControls()
     Button colourBlueButton(225, 125, 75, 75, false, "Blue", col1, col2);
 
     // run functions associated with each button on press
-    while (!M5.BtnA.isPressed() && !M5.BtnB.isPressed() && !M5.BtnC.isPressed())
+    while (!M5.BtnA.isPressed() && !M5.BtnB.isPressed())
     {
         if (toggleButton.isPressed())
         {
