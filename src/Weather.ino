@@ -7,11 +7,19 @@
 #include <M5Core2.h>
 
 WeatherStruct CurrentWeather;
+RTC_TimeTypeDef WeatherUpdateTime;
 
 // update the currently held information
-void WeatherUpdate()
+void WeatherUpdate(RTC_TimeTypeDef *time)
 {
+    if (WeatherUpdateTime.Minutes == time->Minutes)
+        return;
+    
     CurrentWeather = GetWeather();
+    WeatherUpdateTime = *time;
+
+    // cover up previous weather info
+    M5.Lcd.fillRect(130, 150, 150, 70, TFT_BLACK);
 
     return;
 }

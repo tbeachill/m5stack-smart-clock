@@ -10,18 +10,22 @@
 RblxGameInfo ObbyInfo;
 RblxGameInfo ClubInfo;
 int PreviousHigh = 0;
-RTC_TimeTypeDef UpdateTime;
+RTC_TimeTypeDef RblxUpdateTime;
 
 // update the currently held information
 void RblxUpdate(RTC_TimeTypeDef *time)
 {
+    // return if the update has already been performed
+    if (RblxUpdateTime.Minutes == time->Minutes)
+        return;
+    
     ObbyInfo = RblxGetInfo(Obby);
     ClubInfo = RblxGetInfo(Club);
-    UpdateTime = *time;
+    RblxUpdateTime = *time;
 
-    if (ObbyInfo.Playing + ClubInfo.Playing > PreviousHigh)
+    // vibrate once if more people are playing now than the last update and it is daytime
+    if (ObbyInfo.Playing + ClubInfo.Playing > PreviousHigh && (time->Hours > 8 || time->Hours < 21))
     {
-        // vibrate once if more people are playing now than the last update
         M5.Axp.SetLDOEnable(3, true);
         delay(100);
         M5.Axp.SetLDOEnable(3, false);
@@ -29,6 +33,8 @@ void RblxUpdate(RTC_TimeTypeDef *time)
         PreviousHigh = ObbyInfo.Playing + ClubInfo.Playing;
     }
 
+    ClearScreen();
+    
     return;
 }
 
@@ -58,7 +64,7 @@ void RblxPrintInfo()
     M5.Lcd.println();
 
     M5.Lcd.println("--------------------------");
-    M5.Lcd.printf("       last updated: %02d:%02d", UpdateTime.Hours, UpdateTime.Minutes);
+    M5.Lcd.printf("       last updated: %02d:%02d", RblxUpdateTime.Hours, RblxUpdateTime.Minutes);
 
     return;
 }

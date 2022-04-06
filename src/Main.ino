@@ -59,14 +59,15 @@ void loop() {
   // display one of the screens depending on which button was last pressed
   if (LastPressed == 0)
   {
-    WeatherUpdate();
+    WeatherUpdate(&TimeStruct);
+    WeatherPrintInfo();
 
     while (!M5.BtnB.isPressed() && !M5.BtnC.isPressed())
     {
       // update every 2 hours
-      if (TimeStruct.Hours % 2 == 0 && TimeStruct.Minutes == 0 && TimeStruct.Seconds == 0)
+      if (TimeStruct.Hours % 2 == 0 && TimeStruct.Minutes == 0)
       {
-        WeatherUpdate();
+        WeatherUpdate(&TimeStruct);
         WeatherPrintInfo();
       }
 
@@ -78,7 +79,7 @@ void loop() {
       }
       
       DisplayTime(&DateStruct, &TimeStruct, &AlarmSet);
-      WeatherPrintInfo();
+      //WeatherPrintInfo();
       AutoBrightness(&TimeStruct);
       AlarmListener(&TimeStruct, &AlarmTime, &AlarmSet);
 
@@ -97,7 +98,7 @@ void loop() {
     while (!M5.BtnA.isPressed() && !M5.BtnC.isPressed())
     {
       // update every 5 minutes
-      if (TimeStruct.Minutes % 5 == 0 && TimeStruct.Seconds == 0)
+      if (TimeStruct.Minutes % 5 == 0)
         RblxUpdate(&TimeStruct);
       
       RblxPrintInfo();

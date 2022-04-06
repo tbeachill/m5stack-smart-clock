@@ -9,6 +9,6 @@ struct RblxGameInfo
     int Favourites;
 };
 
-void RblxUpdate();
+void RblxUpdate(RTC_TimeTypeDef *time);
 void RblxPrintInfo();
 RblxGameInfo RblxGetInfo(Place place);

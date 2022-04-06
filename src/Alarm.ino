@@ -71,6 +71,8 @@ void AlarmControl(HourMin *alarm, bool *set)
 // check whether it is time to play the alarm
 void AlarmListener(RTC_TimeTypeDef *time, HourMin *alarm, bool *set)
 {
+    M5.Rtc.GetTime(time);
+    
     if ((alarm->Hour == time->Hours) && (alarm->Minute == time->Minutes) && *set == true)
     {
         // cancel the alarm on any touch
