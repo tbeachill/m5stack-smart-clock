@@ -126,6 +126,5 @@ void loop() {
     }
 
     ClearScreen();
-
   }
 }

@@ -6,6 +6,7 @@
 #include <ssl_client.h>
 #include <WiFiClientSecure.h>
 #include <M5Core2.h>
+#include <Utilities.h>
 
 RblxGameInfo ObbyInfo;
 RblxGameInfo ClubInfo;
@@ -34,7 +35,7 @@ void RblxUpdate(RTC_TimeTypeDef *time)
     }
 
     ClearScreen();
-    
+
     return;
 }
 
