@@ -4,13 +4,9 @@
 void AutoBrightness(RTC_TimeTypeDef *time)
 {
     if (time->Hours > 21 || time->Hours < 8)
-    {
         M5.Axp.SetLcdVoltage(2500);
-    }
     else
-    {
         M5.Axp.SetLcdVoltage(2750);
-    }
     
     return;
 }
@@ -22,6 +18,7 @@ void ClearScreen()
     M5.Lcd.setCursor(0, 20);
     M5.Lcd.setTextSize(1);
     M5.Lcd.setTextColor(WHITE);
-
     M5.Lcd.setTextFont(GLCD);
+
+    return;
 }

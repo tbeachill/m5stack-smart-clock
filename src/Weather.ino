@@ -56,9 +56,7 @@ WeatherStruct GetWeather()
 
     // check that wifi is connected
     if (WiFi.status() != WL_CONNECTED)
-    {
         return weather;
-    }
 
     WiFiClientSecure client;
     client.setInsecure();
@@ -82,12 +80,9 @@ WeatherStruct GetWeather()
         weather.MinTemp = days_0["tempmin"];
         weather.PrecipAmount = days_0["precip"];
         weather.PrecipProb = days_0["precipprob"];
-
-        return weather;
     }
     else
-    {
         http.end();
-        return weather;
-    }
+
+    return weather;
 }

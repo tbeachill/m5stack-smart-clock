@@ -8,9 +8,7 @@ void KasaEvent(Action action)
 {
     // check that wifi is connected
     if (WiFi.status() != WL_CONNECTED)
-    {
         return;
-    }
 
     // select the correct webhook url
     String actionURL;

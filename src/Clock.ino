@@ -48,9 +48,7 @@ tm* GetTime(int offset)
     timeClient.setTimeOffset(offset);
 
     while(!timeClient.update())
-    {
         timeClient.forceUpdate();
-    }
 
     // get the current time
     time_t t = timeClient.getEpochTime();
@@ -96,6 +94,8 @@ void DisplayTime(RTC_DateTypeDef *date, RTC_TimeTypeDef *time, bool *alarmSet)
     // write weekday
     M5.Lcd.setCursor(30, 170);
     M5.Lcd.printf("%s", weekday[date->WeekDay]);
+
+    return;
 }
 
 // get whether or not daylight savings is being observed
@@ -108,9 +108,7 @@ int GetDST(tm* gmtm)
         dst = 1;
 
     if (WiFi.status() != WL_CONNECTED)
-    {
         return dst;
-    }
 
     WiFiClientSecure client;
     client.setInsecure();

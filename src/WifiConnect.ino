@@ -9,9 +9,12 @@ void WifiConnect()
 {
   M5.Lcd.printf("%s: ", WIFI_SSID);
 
-  while (status != WL_CONNECTED) {
+  while (status != WL_CONNECTED) 
+  {
     status = WiFi.begin(WIFI_SSID, WIFI_PW);
     // wait 5 seconds for connection:
     delay(5000);
   }
+
+  return;
 }  

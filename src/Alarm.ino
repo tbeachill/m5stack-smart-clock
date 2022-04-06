@@ -1,17 +1,11 @@
 #include <M5Core2.h>
 #include <Alarm.h>
-#include <SPIFFS.h>
-#include <AudioFileSourceSPIFFS.h>
-#include <AudioFileSourceID3.h>
-#include <AudioGeneratorMP3.h>
-#include <AudioOutputI2S.h>
-#include "AudioOutputI2SNoDAC.h"
 
 // button colours
 ButtonColors col1 = {DARKGREY, WHITE, WHITE};
 ButtonColors col2 = {ORANGE, WHITE, WHITE};
 
-
+// choose a time and set/unset the alarm
 void AlarmControl(HourMin *alarm, bool *set)
 {
     Button hourUpButton(60, 20, 75, 50, false, "+", col1, col2);
@@ -73,6 +67,8 @@ void AlarmControl(HourMin *alarm, bool *set)
     }
 
     ClearScreen();
+
+    return;
 }
 
 // check whether it is time to play the alarm
@@ -93,4 +89,6 @@ void AlarmListener(RTC_TimeTypeDef *time, HourMin *alarm, bool *set)
         M5.Axp.SetLDOEnable(3, false);
         *set = false;
     }
+
+    return;
 }

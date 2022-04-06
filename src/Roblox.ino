@@ -26,6 +26,7 @@ void RblxUpdate()
 
         previousHigh = obbyInfo.Playing + clubInfo.Playing;
     }
+
     return;
 }
 
@@ -63,7 +64,9 @@ void RblxPrintInfo()
 void FormatNumber(int number, bool space)
 {
     number > 999 ? M5.Lcd.printf("%4.1fk |", (float) number / 1000) : M5.Lcd.printf("%4d  |", number);
-    if (space) M5.Lcd.print(" ");
+
+    if (space)
+        M5.Lcd.print(" ");
 
     return;
 }
@@ -75,9 +78,7 @@ RblxGameInfo RblxGetInfo(Place place)
 
     // check that wifi is connected
     if (WiFi.status() != WL_CONNECTED)
-    {
         return rb;
-    }
 
     // select the correct webhook url
     String placeURL;
@@ -114,15 +115,10 @@ RblxGameInfo RblxGetInfo(Place place)
         rb.Visits = data_0["visits"];
         rb.Playing = data_0["playing"];
 
-        delay(1000);
-
-        return rb;
+        delay(500);
     }
     else
-    {
         http.end();
-        return rb;
-    }
 
-    return;
+    return rb;
 }

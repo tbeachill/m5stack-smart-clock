@@ -50,17 +50,11 @@ void loop() {
 
   // listener for button presses
   if (M5.BtnA.isPressed())
-  {
     LastPressed = 0;
-  }
   else if (M5.BtnB.isPressed())
-  {
     LastPressed = 1;
-  }
   else if (M5.BtnC.isPressed())
-  {
     LastPressed = 2;
-  }
 
   // display one of the screens depending on which button was last pressed
   if (LastPressed == 0)
@@ -104,9 +98,7 @@ void loop() {
     {
       // update every 5 minutes
       if (TimeStruct.Minutes % 5 == 0 && TimeStruct.Seconds == 0)
-      {
         RblxUpdate();
-      }
       
       RblxPrintInfo();
       AutoBrightness(&TimeStruct);
