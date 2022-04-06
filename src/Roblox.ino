@@ -9,12 +9,24 @@
 
 RblxGameInfo obbyInfo;
 RblxGameInfo clubInfo;
+int previousHigh = 0;
 
 // update the currently held information
 void RblxUpdate()
 {
     obbyInfo = RblxGetInfo(Obby);
     clubInfo = RblxGetInfo(Club);
+
+    if (obbyInfo.Playing + clubInfo.Playing > previousHigh)
+    {
+        // vibrate once if more people are playing now than the last update
+        M5.Axp.SetLDOEnable(3, true);
+        delay(100);
+        M5.Axp.SetLDOEnable(3, false);
+
+        previousHigh = obbyInfo.Playing + clubInfo.Playing;
+    }
+    return;
 }
 
 // print the information to the screen
@@ -43,6 +55,8 @@ void RblxPrintInfo()
     M5.Lcd.println();
 
     M5.Lcd.println("--------------------------");
+
+    return;
 }
 
 // format a number to 0.0k if 1000 or over
@@ -50,6 +64,8 @@ void FormatNumber(int number, bool space)
 {
     number > 999 ? M5.Lcd.printf("%4.1fk |", (float) number / 1000) : M5.Lcd.printf("%4d  |", number);
     if (space) M5.Lcd.print(" ");
+
+    return;
 }
 
 // get current info on own roblox games
@@ -107,4 +123,6 @@ RblxGameInfo RblxGetInfo(Place place)
         http.end();
         return rb;
     }
+
+    return;
 }
